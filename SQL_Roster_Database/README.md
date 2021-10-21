@@ -1,1 +1,3 @@
-# SQL Database
+# SQL Scouting Database
+
+As part of a final project in grad school, I was tasked with creating a SQL database using tables, views, and procedures. I created a database meant to store scouting information alongside player bio info. Using the University of Miami baseball roster as a template, I created tables for player info, a table specific for hitters and pitchers, and a place where scouts could add their own notes. Within the hitter and pitcher table, a scout or coach could input tool and pitch grades. With the procedures, a scout or coach could update player info, notes, or priority, as his or her opinion could change the more they see a player.
