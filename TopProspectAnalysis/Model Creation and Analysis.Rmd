@@ -1,0 +1,152 @@
+---
+title: "Scatter Analysis"
+author: "Andrew Gold"
+date: "10/13/2021"
+output: pdf_document
+---
+
+```{r}
+library(ggplot2)
+library(corrplot)
+library(glmnet)
+library(pls)
+```
+
+```{r}
+Current_MLB_with_MiLB = read.csv("Current_MLB_with_MiLB_Final.csv")
+Current_MiLB = read.csv("Current_MiLB_Final.csv")
+```
+
+
+```{r}
+ggplot(Current_MLB_with_MiLB, aes(BB_Percentage_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(K_Percentage_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(BB_to_K_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(AVG_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(OBP_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(SLG_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(OPS_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(ISO_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(Spd_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(BABIP_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(wSB_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(wRC_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(wRAA_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(wOBA_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+
+ggplot(Current_MLB_with_MiLB, aes(wRCplus_MiLB, wRCplus_MLB))+
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x)
+```
+```{r}
+df = Current_MLB_with_MiLB[, c(5,7,9,11,13,15,17,19,21,23,25,27,29,31,33)]
+cor = cor(df)
+cor
+corrplot::corrplot(cor, order = "hclust", tl.col = "black", tl.srt = 45)
+corrplot::corrplot(cor, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
+```
+
+
+```{r}
+# Create test and train data set split 80/20
+set.seed(0)
+sample = sample(1:nrow(Current_MLB_with_MiLB), .8*nrow(Current_MLB_with_MiLB), replace = F)
+train = Current_MLB_with_MiLB[sample, c(5,7,9,11,13,15,17,19,21,23,25,27,29,31,32,33)]
+test = Current_MLB_with_MiLB[-sample, c(5,7,9,11,13,15,17,19,21,23,25,27,29,31,33)]
+y_test = Current_MLB_with_MiLB[-sample, c(32)]
+```
+
+```{r}
+m1 = lm(wRCplus_MLB ~ wOBA_MiLB + wRAA_MiLB + wRC_MiLB, data = train)
+m1_pred = predict(m1, newdata = test)
+RMSE_m1 = sqrt(mean((m1_pred - y_test)^2))
+Current_MiLB$m1_MLB_wRCplus_pred = predict(m1, Current_MiLB)
+```
+
+```{r}
+
+m2 = lm(wRCplus_MLB ~ wOBA_MiLB + wRAA_MiLB, data = train)
+m2_pred = predict(m2, newdata = test)
+RMSE_m2 = sqrt(mean((m2_pred - y_test)^2))
+Current_MiLB$m2_MLB_wRCplus_pred = predict(m2, Current_MiLB)
+```
+
+```{r}
+# Ridge regression on entire data set
+x_var = data.matrix(Current_MLB_with_MiLB[,c(5,7,9,11,13,15,17,19,21,23,25,27,29,31,33)])
+y_var = Current_MLB_with_MiLB[,"wRCplus_MLB"]
+lambda_seq = 10^seq(2, -1, by = -.1)
+fit = glmnet(x_var, y_var, alpha = 0, lambda = lambda_seq)
+ridge_cv = cv.glmnet(x_var, y_var, alpha = 0)
+best_lambda = ridge_cv$lambda.min
+best_lambda
+best_fit = ridge_cv$glmnet.fit
+best_ridge = glmnet(x_var, y_var, alpha = 0, lambda = 1.690554)
+coef(best_ridge) #still getting negative coefficients that should be positive
+```
+
+```{r}
+# Principal Components
+pcr.fit = pcr(wRCplus_MLB ~ BB_Percentage_MiLB + K_Percentage_MiLB +  BB_to_K_MiLB + AVG_MiLB + OBP_MiLB + SLG_MiLB + OPS_MiLB + ISO_MiLB + Spd_MiLB + BABIP_MiLB + wSB_MiLB + wRC_MiLB + wRAA_MiLB + wOBA_MiLB + wRCplus_MiLB, data = train, scale = T, validation = "CV")
+
+summary(pcr.fit)
+validationplot(pcr.fit)
+validationplot(pcr.fit, val.type = "MSEP")
+validationplot(pcr.fit, val.type = "R2")
+pcr_pred = predict(pcr.fit, test, ncomp = 8)
+RMSE_pcr = sqrt(mean((pcr_pred - y_test)^2))
+
+Current_MiLB$pcr_wRCplus_pred = predict(pcr.fit, newdata = Current_MiLB, ncomp = 8)
+```
+
+```{r}
+RMSE_m1
+RMSE_m2
+RMSE_pcr
+plot(pcr_pred ~ y_test)
+abline(lm(pcr_pred~y_test))
+summary(y_test)
+```
+
+
