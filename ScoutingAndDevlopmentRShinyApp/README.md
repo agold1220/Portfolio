@@ -1,4 +1,4 @@
-# Baseball Savant R Shiny App
+# Scouting and Development R Shiny App
 
 https://agold1.shinyapps.io/BaseballApp/
 
