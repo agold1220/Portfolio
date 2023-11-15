@@ -1,11 +1,3 @@
-
-
--- Andrew Gold and Kolin Boorom
--- Final Project
-
-USE student28;
-
-
 CREATE TABLE Player_info(
     Player_id		VARCHAR(255)	NOT NULL,
     Name			VARCHAR(255)	NOT NULL,
@@ -77,27 +69,27 @@ INSERT INTO Pitchers (Player_id, Handedness, Starter_Reliever, FB, CB, SL, CH, S
 SELECT * FROM Pitchers;
 
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('1','Mykanthony Valdez', '2020','CF','Calvary Christian','Davie','FL','MykanthonyValdez@gmail.com','73','226');
+VALUES('1','Player 1', '2020','CF','Calvary Christian','Davie','FL','Player1@gmail.com','73','226');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('2','CJ Kayfus', '2022','IF/OF','Palm Beach Central','Wellington','FL','CJKayfus@gmail.com','72','175');
+VALUES('2','Player2', '2022','IF/OF','Palm Beach Central','Wellington','FL','Player2@gmail.com','72','175');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('3','Chad Born', '2021','RF','Orange Lutheran','Placentia','CA','ChadBorn@gmail.com','70','190');
+VALUES('3','Player3', '2021','RF','Orange Lutheran','Placentia','CA','Player3@gmail.com','70','190');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('4','Anthony Vilar', '2023','SS','Westminster Christian','Miami','FL','AnthonyVilar@gmail.com','71','190');
+VALUES('4','Player4', '2023','SS','Westminster Christian','Miami','FL','Player4@gmail.com','71','190');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('5','Anthony Arguelles', '2022','RHP','Santa Fe College / Columbus','Miami','FL','AnthonyArguelles@gmail.com','72','190');
+VALUES('5','Player 5', '2022','RHP','Santa Fe College / Columbus','Miami','FL','Player5@gmail.com','72','190');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('6','JP Gates', '2022','LHP','Nature Coast','Brooksville','FL','JPGates@gmail.com','74','195');
+VALUES('6','Player 6', '2022','LHP','Nature Coast','Brooksville','FL','Player6@gmail.com','74','195');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('7','Mike Rosario', '2021','OF','St. Johns River State / Buchholz','Newberry','FL','MikeRosario@gmail.com','72','180');
+VALUES('7','Player 7', '2021','OF','St. Johns River State / Buchholz','Newberry','FL','Player7@gmail.com','72','180');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('8','Carson Palmquist', '2023','LHP','Riverdale','Fort Myers','FL','CarsonPalmquist@gmail.com','71','222');
+VALUES('8','Player 8', '2023','LHP','Riverdale','Fort Myers','FL','Player8@gmail.com','71','222');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('9','Raymond Gil', '2022','3B','Gulliver Prep','Miami','FL','RaymondGil@gmail.com','72','175');
+VALUES('9','Player 9', '2022','3B','Gulliver Prep','Miami','FL','Player9@gmail.com','72','175');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('10','Spencer Bodanza', '2021','LHP','Hillsborough CC / Alonso','Tampa','FL','SpencerBodanza@gmail.com','76','186');
+VALUES('10','Player 10', '2021','LHP','Hillsborough CC / Alonso','Tampa','FL','Player10@gmail.com','76','186');
 INSERT INTO Player_info(Player_id, Name, Grad_Year, Position, HS,Hometown,State,Email,Height,Weight) 
-VALUES('11','Alex McFarlane', '2024','RHP','Habersham Central','St. Thomas','USVI','AlexMcFarlane@gmail.com','73','192');
+VALUES('11','Player 11', '2024','RHP','Habersham Central','St. Thomas','USVI','Player11@gmail.com','73','192');
 
 SELECT * FROM Player_info;
 
